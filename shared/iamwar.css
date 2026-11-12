@@ -1,0 +1,129 @@
+/* ==========================================================================
+   shared/iamwar.css — the "I AM WAR" feature section + bold brand mark.
+   Each template sets a handful of --iaw-* tokens (see the end of its
+   styles.css) and picks a layout with data-variant="1…6".
+   ========================================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Courier+Prime:wght@400;700&display=swap");
+
+/* ---------- The bold mark, wherever the name appears ---------- */
+.iaw {
+  font-weight: 800;
+  font-style: normal;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--iaw-accent, currentColor);
+  white-space: nowrap;
+}
+/* "art" and "cinema" inside project areas: bold, but keep their own case */
+.iaw--word { text-transform: inherit; letter-spacing: 0.01em; white-space: normal; color: inherit; font-weight: 800; }
+
+/* ---------- Feature section ---------- */
+.iaw-feature {
+  --iaw-ink: currentColor;
+  --iaw-muted: color-mix(in srgb, currentColor 66%, transparent);
+  --iaw-accent: #ffb347;
+  --iaw-line: color-mix(in srgb, currentColor 22%, transparent);
+  --iaw-radius: 6px;
+  --iaw-title-font: "Big Shoulders Display", Impact, "Arial Narrow", sans-serif;
+  position: relative; display: block; overflow-x: clip;
+  padding: clamp(4.5rem, 9vw, 8rem) clamp(1rem, 4vw, 3rem);
+  color: var(--iaw-ink);
+}
+.iaw__inner {
+  position: relative; max-width: 1240px; margin-inline: auto;
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(1.75rem, 5vw, 5rem); align-items: center;
+}
+.iaw__art { --px: 0; --py: 0; position: relative; margin: 0; width: 100%; max-width: 500px; justify-self: center; min-width: 0; }
+.iaw-art { display: block; width: 100%; height: auto; border-radius: var(--iaw-radius); box-shadow: 0 34px 70px -32px rgba(0, 0, 0, 0.7); }
+.iaw__art figcaption { margin-top: 0.8rem; font-family: "Courier Prime", ui-monospace, monospace; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--iaw-muted); }
+
+/* layered parallax inside the artwork */
+.iaw-l { transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+.iaw-l--sky   { transform: translate(calc(var(--px) * -7px),  calc(var(--py) * -5px)); }
+.iaw-l--wall  { transform: translate(calc(var(--px) * -11px), calc(var(--py) * -6px)); }
+.iaw-l--child { transform: translate(calc(var(--px) * -15px), calc(var(--py) * -7px)); }
+.iaw-l--dir   { transform: translate(calc(var(--px) * 18px),  calc(var(--py) * 9px)); }
+.iaw-win { animation: iawTwinkle 3.6s ease-in-out infinite; }
+.iaw-rec { animation: iawBlink 1.3s steps(2, jump-none) infinite; }
+.iaw-ray { animation: iawBeam 4.4s ease-in-out infinite; transform-origin: 392px 640px; }
+@keyframes iawTwinkle { 50% { opacity: 0.55; } }
+@keyframes iawBlink { 50% { opacity: 0.1; } }
+@keyframes iawBeam { 50% { opacity: 0.55; } }
+
+/* reveal (only when the script is going to run it) */
+.iaw-js .iaw__art:not(.is-in) .iaw-art { opacity: 0; transform: translateY(26px) scale(0.97); }
+.iaw-js .iaw__art .iaw-art { transition: opacity 1.1s ease, transform 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
+
+.iaw__text { min-width: 0; }
+.iaw__kicker { margin: 0 0 1rem; font-family: "Courier Prime", ui-monospace, monospace; font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--iaw-accent); }
+.iaw__title {
+  margin: 0 0 1.2rem; display: flex; flex-direction: column; gap: 0.02em;
+  font-family: var(--iaw-title-font); font-weight: 900; text-transform: uppercase;
+  font-size: clamp(4.6rem, 13vw, 10.5rem); line-height: 0.82; letter-spacing: -0.005em;
+}
+.iaw__title span:first-child { color: transparent; -webkit-text-stroke: 2px var(--iaw-ink); }
+.iaw__title span:last-child { color: var(--iaw-ink); }
+.iaw__tag { margin: 0 0 1rem; max-width: 30ch; font-size: clamp(1.25rem, 2.2vw, 1.75rem); line-height: 1.25; font-style: italic; }
+.iaw__body { margin: 0 0 1.4rem; max-width: 52ch; color: var(--iaw-muted); line-height: 1.65; }
+.iaw__by { margin: 0 0 1.6rem; font-family: "Courier Prime", ui-monospace, monospace; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; }
+.iaw__works-label { margin: 0 0 0.6rem; font-family: "Courier Prime", ui-monospace, monospace; font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--iaw-muted); }
+.iaw__works { list-style: none; margin: 0 0 1.8rem; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.iaw__works a { display: inline-block; padding: 0.4rem 0.85rem; border: 1px solid var(--iaw-line); border-radius: 999px; font-size: 0.85rem; text-decoration: none; color: inherit; transition: background 0.25s, color 0.25s, border-color 0.25s; }
+.iaw__works a:hover, .iaw__works a:focus-visible { background: var(--iaw-accent); color: var(--iaw-on-accent, #14100a); border-color: var(--iaw-accent); }
+.iaw__cta { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.9rem 1.5rem; border-radius: 999px; background: var(--iaw-accent); color: var(--iaw-on-accent, #14100a); font-weight: 700; text-decoration: none; transition: transform 0.25s, box-shadow 0.25s; }
+.iaw__cta:hover, .iaw__cta:focus-visible { transform: translateY(-2px); box-shadow: 0 12px 30px -12px var(--iaw-accent); }
+
+/* ---------- Variants ---------- */
+/* 1 · Editorial — hairlines, art framed with an offset outline */
+.iaw-feature[data-variant="1"] .iaw-art { border-radius: 0; box-shadow: none; outline: 1px solid var(--iaw-ink); outline-offset: 10px; }
+.iaw-feature[data-variant="1"] .iaw__title span:first-child { -webkit-text-stroke-width: 1.5px; }
+.iaw-feature[data-variant="1"] .iaw__cta, .iaw-feature[data-variant="1"] .iaw__works a { border-radius: 0; }
+.iaw-feature[data-variant="1"] .iaw__inner { border-top: 1px solid var(--iaw-ink); padding-top: clamp(2rem, 4vw, 3.5rem); }
+
+/* 2 · Aurora — a glass card, art on the right with a glow */
+.iaw-feature[data-variant="2"] .iaw__inner { padding: clamp(1.25rem, 3.5vw, 3rem); border-radius: 32px; border: 1px solid var(--iaw-line); background: var(--iaw-card, rgba(255, 255, 255, 0.06)); -webkit-backdrop-filter: blur(18px) saturate(1.3); backdrop-filter: blur(18px) saturate(1.3); }
+.iaw-feature[data-variant="2"] .iaw__art { order: 2; }
+.iaw-feature[data-variant="2"] .iaw-art { border-radius: 22px; box-shadow: 0 30px 80px -24px var(--iaw-accent); }
+
+/* 3 · Neon grid — HUD brackets and a scanline over the art */
+.iaw-feature[data-variant="3"] .iaw__art::before, .iaw-feature[data-variant="3"] .iaw__art::after { content: ""; position: absolute; width: 26px; height: 26px; border: 2px solid var(--iaw-accent); pointer-events: none; z-index: 2; }
+.iaw-feature[data-variant="3"] .iaw__art::before { top: -8px; left: -8px; border-right: 0; border-bottom: 0; }
+.iaw-feature[data-variant="3"] .iaw__art::after { right: -8px; bottom: 2.2rem; border-left: 0; border-top: 0; }
+.iaw-feature[data-variant="3"] .iaw-art { border-radius: 0; box-shadow: 0 0 0 1px var(--iaw-line), 0 0 60px -18px var(--iaw-accent); }
+.iaw-feature[data-variant="3"] .iaw__title { font-family: var(--iaw-title-font); letter-spacing: 0.01em; }
+.iaw-feature[data-variant="3"] .iaw__cta, .iaw-feature[data-variant="3"] .iaw__works a { border-radius: 0; }
+.iaw-feature[data-variant="3"] .iaw__art { overflow: visible; }
+
+/* 4 · Playful — a taped, tilted polaroid and sticker chips */
+.iaw-feature[data-variant="4"] .iaw__art { transform: rotate(-3deg); padding: 0.8rem 0.8rem 0; background: #fffaf0; border-radius: 6px; box-shadow: 0 24px 40px -18px rgba(20, 18, 31, 0.6); }
+.iaw-feature[data-variant="4"] .iaw__art::before { content: ""; position: absolute; top: -14px; left: 50%; width: 110px; height: 30px; transform: translateX(-50%) rotate(3deg); background: rgba(255, 214, 90, 0.8); z-index: 2; }
+.iaw-feature[data-variant="4"] .iaw-art { border-radius: 2px; box-shadow: none; }
+.iaw-feature[data-variant="4"] .iaw__art figcaption { padding: 0.7rem 0.2rem 0.9rem; color: #3b3550; font-family: inherit; text-transform: none; font-size: 0.95rem; letter-spacing: 0; }
+.iaw-feature[data-variant="4"] .iaw__title span:last-child { text-shadow: 5px 5px 0 var(--iaw-accent); }
+.iaw-feature[data-variant="4"] .iaw__works a { border: 2px solid var(--iaw-ink); background: var(--iaw-card, #fff); transform: rotate(-1.5deg); }
+.iaw-feature[data-variant="4"] .iaw__works li:nth-child(even) a { transform: rotate(1.8deg); }
+
+/* 5 · Journey — dark cinematic panel, soft glow behind the art */
+.iaw-feature[data-variant="5"] .iaw__inner { padding: clamp(1.25rem, 3vw, 2.5rem); border-radius: 24px; background: rgba(4, 6, 14, 0.78); border: 1px solid var(--iaw-line); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.iaw-feature[data-variant="5"] .iaw-art { box-shadow: 0 0 90px -20px var(--iaw-accent); }
+
+/* 6 · Director's Cut — widescreen bars above and below */
+.iaw-feature[data-variant="6"] { padding-block: clamp(5.5rem, 10vw, 9rem); }
+.iaw-feature[data-variant="6"]::before, .iaw-feature[data-variant="6"]::after { content: ""; position: absolute; left: 0; right: 0; height: clamp(1.5rem, 4vw, 3rem); background: #000; }
+.iaw-feature[data-variant="6"]::before { top: 0; } .iaw-feature[data-variant="6"]::after { bottom: 0; }
+.iaw-feature[data-variant="6"] .iaw__art { max-width: 540px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .iaw__inner { grid-template-columns: minmax(0, 1fr); }
+  .iaw-feature[data-variant="2"] .iaw__art { order: 0; }
+  .iaw__art { max-width: 440px; }
+  .iaw-feature[data-variant="4"] .iaw__art { transform: rotate(-2deg); }
+  .iaw__title { font-size: clamp(4.4rem, 22vw, 8rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iaw-win, .iaw-rec, .iaw-ray { animation: none; }
+  .iaw-l { transition: none; }
+}
