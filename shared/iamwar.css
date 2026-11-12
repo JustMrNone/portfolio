@@ -123,6 +123,11 @@
   .iaw__title { font-size: clamp(4.4rem, 22vw, 8rem); }
 }
 
+/* ---------- The war moment ---------- */
+.war-fx { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 40; pointer-events: none; mix-blend-mode: screen; }
+.war-fx--in { position: absolute; z-index: 1; }
+dialog.is-war::backdrop { background: radial-gradient(ellipse at 50% 90%, rgba(120, 30, 14, 0.55), rgba(5, 3, 3, 0.9) 70%); }
+
 @media (prefers-reduced-motion: reduce) {
   .iaw-win, .iaw-rec, .iaw-ray { animation: none; }
   .iaw-l { transition: none; }

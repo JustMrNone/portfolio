@@ -196,10 +196,125 @@
     mo.observe(document.body, { childList: true, subtree: true, characterData: false });
   }
 
-  window.IAW = { art: art, mount: mount, boldify: boldify };
+
+  /* ---------- 4. THE WAR MOMENT — canvas atmosphere --------------------- */
+  /* Ash, embers, distant flashes, glitch bars and — at the end of every
+     cycle — a flock of paper cranes rising. Mounted on any element. */
+  function warFx(host, opts) {
+    opts = opts || {};
+    var cv = document.createElement('canvas');
+    cv.className = 'war-fx' + (opts.inline ? ' war-fx--in' : '');
+    cv.setAttribute('aria-hidden', 'true');
+    host.appendChild(cv);
+    var ctx = cv.getContext('2d'), w = 0, h = 0, dpr = 1, raf = 0, alive = true, visible = true;
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var rnd = Math.random, parts = [], cranes = [], flash = 0, nextFlash = 1.2, nextCranes = 4, glitch = [], nextGlitch = 2, t0 = performance.now(), last = t0;
+
+    function resize() {
+      var r = cv.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+      w = Math.max(1, r.width); h = Math.max(1, r.height);
+      cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function spawn(kind, fresh) {
+      var ember = kind === 'ember';
+      return { k: kind, x: rnd() * w, y: fresh ? (ember ? h + 10 : -10) : rnd() * h,
+        vx: (rnd() - 0.5) * (ember ? 24 : 18), vy: ember ? -(30 + rnd() * 60) : 18 + rnd() * 34,
+        r: ember ? 1.2 + rnd() * 2.6 : 0.8 + rnd() * 2, a: 0.4 + rnd() * 0.6, ph: rnd() * 6.28 };
+    }
+    function crane(x, y, s, a) {
+      ctx.save(); ctx.translate(x, y); ctx.rotate(a);
+      ctx.fillStyle = 'rgba(255,246,230,0.95)'; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(-s, -s * 0.35); ctx.lineTo(-s * 0.2, -s * 0.08); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = 'rgba(239,226,204,0.95)'; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(s, -s * 0.5); ctx.lineTo(s * 0.2, -s * 0.08); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = 'rgba(255,250,240,0.98)'; ctx.beginPath(); ctx.moveTo(-s * 0.2, -s * 0.08); ctx.lineTo(0, s * 0.65); ctx.lineTo(s * 0.2, -s * 0.08); ctx.closePath(); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(s * 0.2, -s * 0.08); ctx.lineTo(s * 0.62, -s * 0.42); ctx.lineTo(s * 0.5, -s * 0.2); ctx.closePath(); ctx.fill();
+      ctx.restore();
+    }
+    function frame(now) {
+      if (!alive) return;
+      raf = requestAnimationFrame(frame);
+      if (!visible || document.hidden) { last = now; return; }
+      var dt = Math.min(0.05, (now - last) / 1000); last = now;
+      var t = (now - t0) / 1000;
+      ctx.clearRect(0, 0, w, h);
+      // atmosphere: breathing red vignette
+      var g = ctx.createRadialGradient(w / 2, h * 0.9, h * 0.1, w / 2, h * 0.9, h * 0.95);
+      g.addColorStop(0, 'rgba(255,120,50,' + (0.16 + Math.sin(t * 1.4) * 0.05) + ')'); g.addColorStop(1, 'rgba(229,53,43,0)');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+      // flash
+      nextFlash -= dt;
+      if (nextFlash <= 0) { flash = 1; nextFlash = 3 + rnd() * 5; }
+      if (flash > 0) { ctx.fillStyle = 'rgba(255,150,80,' + (flash * 0.28) + ')'; ctx.fillRect(0, 0, w, h); flash = Math.max(0, flash - dt * 2.2); }
+      // particles
+      for (var i = 0; i < parts.length; i++) {
+        var p = parts[i], ember = p.k === 'ember';
+        p.x += (p.vx + Math.sin(t * 0.9 + p.ph) * 10) * dt; p.y += p.vy * dt;
+        if (p.y < -20 || p.y > h + 20 || p.x < -20 || p.x > w + 20) parts[i] = spawn(p.k, true);
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283);
+        if (ember) { ctx.shadowColor = '#ff7a2e'; ctx.shadowBlur = 8; ctx.fillStyle = 'rgba(255,' + (140 + p.ph * 12 | 0) + ',60,' + (p.a * (0.6 + Math.sin(t * 6 + p.ph) * 0.4)) + ')'; }
+        else { ctx.shadowBlur = 0; ctx.fillStyle = 'rgba(220,212,200,' + p.a * 0.55 + ')'; }
+        ctx.fill();
+      }
+      ctx.shadowBlur = 0;
+      // cranes
+      nextCranes -= dt;
+      if (nextCranes <= 0) {
+        nextCranes = 9 + rnd() * 3;
+        for (var c = 0; c < 6; c++) cranes.push({ x: w * (0.1 + rnd() * 0.8), y: h + 30 + rnd() * 90, s: Math.max(10, w * (0.012 + rnd() * 0.012)), v: 36 + rnd() * 28, ph: rnd() * 6.28, life: 0 });
+      }
+      cranes = cranes.filter(function (k) { return k.y > -60; });
+      cranes.forEach(function (k) {
+        k.y -= k.v * dt; k.life += dt;
+        var sway = Math.sin(t * 1.1 + k.ph);
+        ctx.globalAlpha = Math.min(1, k.life * 1.2) * Math.min(1, Math.max(0, k.y / (h * 0.25)));
+        crane(k.x + sway * 26, k.y, k.s, sway * 0.18);
+      });
+      ctx.globalAlpha = 1;
+      // glitch bars
+      nextGlitch -= dt;
+      if (nextGlitch <= 0) { nextGlitch = 2 + rnd() * 4; glitch = []; for (var q = 0; q < 3 + (rnd() * 3 | 0); q++) glitch.push({ y: rnd() * h, hh: 2 + rnd() * 14, x: (rnd() - 0.5) * 60, life: 0.16 }); }
+      glitch.forEach(function (b) {
+        if (b.life <= 0) return; b.life -= dt;
+        ctx.fillStyle = 'rgba(255,59,46,0.32)'; ctx.fillRect(b.x, b.y, w, b.hh);
+        ctx.fillStyle = 'rgba(80,220,255,0.16)'; ctx.fillRect(-b.x, b.y + b.hh, w, 2);
+      });
+    }
+    function start() {
+      resize();
+      var n = Math.round(Math.min(110, Math.max(36, w * h / 9000)));
+      for (var i = 0; i < n; i++) parts.push(spawn(i % 3 === 0 ? 'ember' : 'ash', false));
+      if (reduce) { frame(performance.now()); cancelAnimationFrame(raf); return; }   // one still frame
+      raf = requestAnimationFrame(frame);
+    }
+    var ro = ('ResizeObserver' in window) ? new ResizeObserver(function () { resize(); }) : null;
+    if (ro) ro.observe(cv);
+    var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }) : null;
+    if (io) io.observe(cv);
+    start();
+    return { stop: function () { alive = false; cancelAnimationFrame(raf); ro && ro.disconnect(); io && io.disconnect(); cv.remove(); } };
+  }
+
+  /* In templates 1–5 the detail dialog is theirs; we simply lay the atmosphere over it
+     whenever it shows the war moment (and take it away again afterwards). */
+  function watchWarDialogs() {
+    var special = (D.timeline || []).filter(function (e) { return e.special === 'war'; })[0];
+    if (!special) return;
+    var check = function () {
+      document.querySelectorAll('dialog').forEach(function (d) {
+        var has = d.querySelector('canvas.war-fx');
+        var show = d.open && (d.textContent || '').indexOf(special.title) !== -1;
+        if (show && !has) { d._war = warFx(d); d.classList.add('is-war'); }
+        else if (!show && has) { d._war && d._war.stop(); d._war = null; d.classList.remove('is-war'); }
+      });
+    };
+    new MutationObserver(function () { requestAnimationFrame(check); }).observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['open'] });
+  }
+
+  window.IAW = { art: art, mount: mount, boldify: boldify, warFx: warFx };
   mount();
   boldify(document.body);
   watch();
+  watchWarDialogs();
   // after the page scripts have rendered their content
   window.addEventListener('DOMContentLoaded', function () { boldify(document.body); });
   window.addEventListener('load', function () { boldify(document.body); });

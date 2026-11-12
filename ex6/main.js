@@ -183,6 +183,7 @@
               <div class="mon__img" id="monImgs">${TL.map((e, i) => `<img src="${esc(e.image)}" alt="${esc(e.alt)}" width="1200" height="900" ${i < 2 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" data-img="${i}">`).join('')}</div>
               <div class="mon__shade"></div>
               <div class="mon__cut" id="monCut"></div>
+              <div class="mon__war" id="monWar" aria-hidden="true"><span class="mon__war-bar">● LIVE · 24 FPS</span><span class="mon__war-title" data-text="SIGNAL LOST">SIGNAL LOST</span><small>Iran — USA</small></div>
               <div class="mon__ui" aria-hidden="true">
                 <div class="mon__top"><span class="mon__pgm"><i></i>PGM</span><span class="mon__cat" id="monCat"></span><span id="monClip"></span></div>
                 <span></span>
@@ -207,7 +208,7 @@
             <div class="strip__view" id="stripView">
               <div class="strip__track" id="stripTrack" style="--cols:${TL.length}">
                 <div class="ruler" aria-hidden="true">${TL.map((e, i) => (i === 0 || TL[i - 1].year !== e.year) ? `<span style="left:calc(120px + ${i} * var(--col))">${e.year}</span>` : '').join('')}</div>
-                ${TL.map((e, i) => `<button class="clip" type="button" data-clip="${i}" style="--i:${i};--lane:${Math.max(0, CATS.indexOf(e.category))};--c:${catColor(e.category)}" aria-label="${esc(`${e.title}, ${e.date}`)}"><span>${e.year} · ${esc(e.title)}</span></button>`).join('')}
+                ${TL.map((e, i) => `<button class="clip${e.special === 'war' ? ' clip--war' : ''}" type="button" data-clip="${i}" style="--i:${i};--lane:${Math.max(0, CATS.indexOf(e.category))};--c:${catColor(e.category)}" aria-label="${esc(`${e.title}, ${e.date}`)}"><span>${e.year} · ${esc(e.title)}</span></button>`).join('')}
               </div>
               <div class="playhead" aria-hidden="true"></div>
             </div>
@@ -352,7 +353,7 @@
      ------------------------------------------------------------------------ */
   const el = {};
   function cacheTimeline() {
-    ['tl', 'tlPin', 'tlStage', 'monImgs', 'monCut', 'monCat', 'monClip', 'monYear', 'monDate', 'info', 'stripView', 'stripTrack', 'tlTC', 'tlCount', 'tlPlay', 'tlPrev', 'tlNext']
+    ['tl', 'tlPin', 'tlStage', 'mon', 'monWar', 'monImgs', 'monCut', 'monCat', 'monClip', 'monYear', 'monDate', 'info', 'stripView', 'stripTrack', 'tlTC', 'tlCount', 'tlPlay', 'tlPrev', 'tlNext']
       .forEach((id) => { el[id] = document.getElementById(id === 'tl' ? 'timeline' : id); });
     el.imgs = $$('img', el.monImgs);
     el.clips = $$('.clip', el.stripTrack);
@@ -405,6 +406,15 @@
       if (!opts.initial) { el.monCut.classList.remove('is-cut'); void el.monCut.offsetWidth; el.monCut.classList.add('is-cut'); }
     }
     el.tlPrev.disabled = k === 0; el.tlNext.disabled = k === n - 1;
+    setWarMode(e.special === 'war');
+  }
+
+  /** The Iran–USA war moment takes over the monitor: scanlines, glitch, ash, embers, then cranes. */
+  function setWarMode(on) {
+    el.mon.classList.toggle('is-war', on);
+    el.info.classList.toggle('is-war', on);
+    if (on && !state.warFx && window.IAW?.warFx) state.warFx = window.IAW.warFx(el.mon, { inline: true });
+    if (!on && state.warFx) { state.warFx.stop(); state.warFx = null; }
   }
 
   /** Scroll position that puts the playhead on stop k (pinned mode). */

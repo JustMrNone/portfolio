@@ -375,6 +375,18 @@ const portfolio = {
       highlight: true
     },
     {
+      id: "iran-usa-war", year: 2025, date: "2025", age: null, special: "war",
+      category: "personal",
+      title: "When the News Became the Film",
+      subtitle: "The Iran–USA war",
+      description: "While the Iran–USA war filled every screen, I stopped scrolling and started listening: to relatives, to neighbours, to the silence between news bulletins. People spoke about fear, about waiting, about ordinary mornings that suddenly felt fragile. That is when I Am War stopped being an idea and became a promise: to tell the story of war from the side of the people who never chose it.",
+      image: "../shared/img/tl-iran-usa-war.svg",
+      alt: "A city skyline at night under a red-orange sky, with embers rising and paper cranes drifting upward",
+      tags: ["Iran–USA war", "Witness", "I Am War"],
+      link: "",
+      highlight: true
+    },
+    {
       id: "sharing-the-process", year: 2025, date: "2025", age: null,
       category: "personal",
       title: "Sharing the Process",
@@ -525,7 +537,7 @@ const portfolio = {
     kicker: "The film at the heart of this portfolio",
     title: ["I AM", "WAR"],
     tagline: "A story told by war itself — and the child who walks through it.",
-    body: "I Am War is the thread through everything you will see here: a short film, a poster series, a shot book, a sound installation and a making-of. Come in, sit down, and see how one quiet drawing grew into a whole world.",
+    body: "I Am War is the thread through everything you will see here: a short film, a poster series, a shot book, a sound installation and a making-of, shaped by the Iran–USA war and by the people who lived through it. Come in, sit down, and see how one quiet drawing grew into a whole world.",
     filmBy: "A film by Elham Hesami",
     caption: "Key art — the director and the child's shadow",
     cta: "See all five works",

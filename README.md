@@ -1,89 +1,65 @@
-# University Application Portfolio — five template directions
+# Elham Hesami — portfolio templates · *I Am War*
 
-Five complete, separate portfolio templates for a student applying to university (the sample content is a fictional applicant, **Noor Alvarez**, applying for **Medicine / MBBS, Fall 2027**). Each tells the same life story — childhood → school → projects → achievements → future — as an animated, interactive timeline, but looks and behaves completely differently so a client can compare and choose.
+Six complete, separate portfolio templates for **Elham Hesami** (director · actress · visual artist · researcher), applying to film school. Every template is built around her film project **I AM WAR** and renders the *same* content from one file, so the client can open all six and choose a direction.
 
 ```
-/portfolio
-  index.html          launcher: preview cards for all five templates
-  shared/data.js      the ONE content file every template reads
-  ex1/                Editorial   (index.html, styles.css, main.js)
-  ex2/                Aurora
-  ex3/                Neon Grid
-  ex4/                Playful
-  ex5/                Journey 3D
-  README.md
+index.html          launcher — six cinematic cards (open this first)
+shared/
+  data.js           ← the ONE place to edit text, projects, timeline, skills, UI copy
+  iamwar.js/.css    the "I AM WAR" key-art feature, bold brand mark, war-moment animation
+  img/              locally generated artwork (portrait + every timeline entry + projects)
+ex1 … ex6/          index.html · styles.css · main.js   (one folder per template)
+.nojekyll           tells GitHub Pages to serve every file as-is
 ```
 
-## Run it locally
+## Run it
 
-No build step. Serve the folder with any static server and open the address it prints:
+It is plain static HTML/CSS/JS — no build step.
 
-```bash
-npx serve .            # or:  python -m http.server 8000
-```
+* **GitHub Pages:** works as-is (all paths are relative, `.nojekyll` is included).
+* **Locally:** double-click `index.html`, or serve the folder (`npx serve .` / `python -m http.server 8000`).
+* GSAP, Lenis and Google Fonts load from CDNs (template 5 also loads Three.js), so an internet connection is needed for full effect.
 
-Then open `/` for the launcher, or go straight to `/ex1/` … `/ex5/`.
-All five templates also work by double-clicking `index.html` (`file://`). A local server is still recommended, because Template 5 loads Three.js from a CDN and needs an internet connection either way.
+## The six cuts
 
-## Edit the content (`shared/data.js`)
+| # | Name | Look | Signature moves |
+|---|------|------|-----------------|
+| 1 | **Editorial** | Paper, ink, vermilion · Instrument Serif | Pinned **horizontal timeline** with a rolling year counter, custom cursor |
+| 2 | **Aurora** | Glass over moving gradients · Bricolage Grotesque | Glowing vertical line, tilting cards, skill rings |
+| 3 | **Neon Grid** | Dark HUD · Space Grotesk / JetBrains Mono | Bento hero, **audio-waveform monitor**, typing shot-log terminal |
+| 4 | **Playful** | Neo-brutalist scrapbook · Bowlby One / Fredoka | Winding SVG path with a walker, draggable polaroids, confetti |
+| 5 | **Journey 3D** | WebGL · Unbounded / Outfit | **Three.js flythrough** along a strand of film, bloom, optional war-drum, 2D fallback |
+| 6 | **Director's Cut** | Projection room · Big Shoulders / Newsreader / Courier Prime | Letterboxed hero with a live **viewfinder**, **screenplay-page About that types itself**, pinned **edit-suite timeline** (scrubbing playhead, tracks, play button), movie-poster projects, **mixing-desk** skills, end-credits contact, film grain, "house lights" theme |
 
-Everything the visitor reads comes from this one object, so editing it updates all five templates and the launcher.
+All six: loader (skippable, under 2.5 s), hero, about + stats, filterable life timeline with a detail modal, projects, skills, future goals, contact + footer, active-section nav, scroll progress, keyboard access and full `prefers-reduced-motion` support. Templates 1, 2, 4 and 6 have a dark/light toggle.
 
-| Key | What it controls |
-|---|---|
-| `person` | name, title, school, degree, location, one-line `bio`, `about` paragraphs, avatar, email, socials |
-| `timeline[]` | the story: `id, year, date, age, category, title, subtitle, description, image, alt, tags, link, highlight` |
-| `projects[]` | title, year, description, image, tech, link, repo |
-| `skills[]` | `name`, `level` 0–100, `group` (`technical`, `creative`, `language`, `soft`) |
-| `stats[]` | label + value (leading digits animate; text after them is kept, e.g. `"43/45"`, `"320+"`) |
-| `future[]` | goals shown in "what's next" |
-| `copy` | every heading, button label and microcopy string; `copy.terminal`, `copy.playful`, `copy.journey` hold template-specific vocabulary |
+## What is in every template
 
-Notes
-- `timeline[].category` must be one of `education`, `project`, `award`, `work`, `personal`, `travel`. Chips are built from the categories present.
-- `highlight: true` marks a milestone (a badge, a star sticker, confetti, a glowing node, depending on the template).
-- Wrapping a word in `*asterisks*` inside a heading in `copy` highlights it (italic accent, gradient or marker, per template; Neon Grid simply strips the asterisks).
-- Images are fixed-seed placeholders from `picsum.photos`. Swap in real photos by changing the URLs; keep `alt` text meaningful.
-- Keep 12–15 timeline entries for the best pacing. Template 5 spaces its nodes automatically for any number of entries.
+* **I AM WAR feature** — bold title, original key art (the director, her camera and a child's shadow over a city of light), five works, one film. Every mention of *I Am War* is set in bold across all pages; inside the project sections the words *art* and *cinema* are bold too.
+* **The Iran–USA war moment** — a timeline entry flagged `special: "war"` in `data.js`. It has its own animated key image, and wherever it opens a canvas atmosphere (ash, embers, distant flashes, glitch bars, then paper cranes rising) is laid over it. Template 6 goes further: the monitor turns to a "signal lost" glitch screen and the clip pulses red.
+* **No empty images** — all pictures are local files in `shared/img/` (a portrait, one per timeline entry, one per project). Swap in real photos by changing the paths in `data.js`.
 
-## Change the design tokens
+## Editing the content
 
-Each template's look is driven by CSS custom properties at the top of its `styles.css` (`:root`, plus a dark block where there is a theme toggle): colours, fonts, spacing, radii and easing curves. Change a colour there and the whole template follows. Fonts are loaded from Google Fonts in each `index.html`; change the `<link>` and the `--font-*` tokens together.
+Everything lives in **`shared/data.js`**:
 
-## The five templates
+* `person` — name, title, bio, email, socials, portrait.
+* `timeline` — 16 entries (`id`, `year`, `date`, `category`, `title`, `subtitle`, `description`, `image`, `tags`, `link`). `age` is optional (`null` hides it). `special: "war"` triggers the war-moment effects.
+* `projects`, `skills`, `stats`, `future`, `iamwar`, and every UI string under `copy`.
+* Wrap a word in `*asterisks*` to make it the italic accent word.
 
-| # | Name | Concept | Palette | Fonts | Timeline |
-|---|---|---|---|---|---|
-| 1 | **Editorial** | Swiss / editorial minimalism | paper `#f3f0e8`, ink `#101010`, vermilion `#c8300a` (dark mode included) | Instrument Serif · Inter Tight | **Horizontal**, scroll-driven: scrolling moves the page sideways through the years; rolling year counter |
-| 2 | **Aurora** | Glassmorphism + soft gradients | lavender `#f2eefc` / indigo `#0b0920`, violet · rose · mint · peach | Bricolage Grotesque · Figtree | **Vertical** glowing line that draws itself; cards float in from alternating sides and tilt to the cursor |
-| 3 | **Neon Grid** | Dark futuristic bento HUD | `#06080c`, cyan `#19f0ff`, magenta `#ff2ea6`, lime `#b6ff3c` | Space Grotesk · JetBrains Mono | **Mission log**: a sticky terminal types the active entry beside a scrolling log |
-| 4 | **Playful** | Neo-brutalism scrapbook | cream `#fff6e0`, yellow · pink · blue · green (dark mode included) | Bowlby One · Fredoka · Caveat | **Hand-drawn winding path** with a walker, year stops and draggable polaroids |
-| 5 | **Journey 3D** | Immersive WebGL | `#02040a`, cyan · violet · pink | Unbounded · Outfit | **Three.js flythrough** along a DNA helix; each milestone is a node with an arrival panel; 2D list fallback |
+> **Verified vs. sample.** From public pages: the IMDb credits (Anahita 2010, Breath 2016, Sister 2016, Lady of the Mansion 2018–19, Pinto 2021), the ORCID publications (*Modern Care Journal* 2022, *Heliyon* 2025, three peer reviews), and the Bauhaus-Universität Weimar Faculty of Art & Design / Deutschlandstipendium 2024 listing. The *I Am War* works, the war-moment wording, the journey entry, bio details, skill levels and links to `example.com` are **sample text to replace** with Elham's own words.
 
-### Libraries per template
+## Changing the look
 
-| Template | Libraries (CDN, exact versions) |
-|---|---|
-| 1–4 | GSAP 3.12.5 + ScrollTrigger, Lenis 1.1.13 (own text splitter — no paid SplitText) |
-| 5 | the same, plus Three.js 0.160.0 (+ EffectComposer, UnrealBloomPass, OutputPass), loaded lazily |
+Each template defines its design tokens (colours, fonts, spacing) as CSS custom properties at the top of its `styles.css`. Template 6 uses `--bg`, `--ink`, `--accent`, `--red`, and the six category colours `--c-education … --c-travel`.
 
-Nothing else is used. Everything else is plain HTML5, CSS3 and ES6+.
+## Libraries
 
-## What every template includes
+GSAP 3.12.5 + ScrollTrigger, Lenis 1.1.13 (all templates), Three.js 0.160.0 (template 5 only, loaded on demand; if it fails, the 2D timeline appears).
 
-Intro/loader (skippable, ~2.3 s) · hero · about + animated stats · **life timeline** with category filter chips · timeline detail view (animated modal; Esc closes, focus is trapped, ← → move between entries) · projects · skills (bars / rings / LED meters / bubbles / radar — a different chart per template) · future goals · contact (no backend: the form hands the message to the visitor's email app) · footer with socials · navigation that highlights the active section · scroll-progress indicator.
+## Accessibility & performance notes
 
-Dark/light toggle: templates 1, 2 and 4.
-
-## Accessibility and performance
-
-- Semantic landmarks, visible focus states, skip link, alt text, keyboard-operable timeline items, tabs, carousels and modals (native `<dialog>`).
-- `prefers-reduced-motion`: smooth scrolling, pinning, tilt, parallax, particles and text effects are turned off and all content stays visible. Template 5 starts in its 2D timeline.
-- Animations use `transform`/`opacity` where possible; images are lazy-loaded; canvas / WebGL loops pause when the tab is hidden (and the ECG pauses off-screen).
-- Mobile (360px+): Editorial's horizontal timeline becomes a stacked list; Neon Grid gets a bottom tab bar and an inline mission log; Playful's path moves to the left edge; Journey 3D lowers pixel ratio, particle counts and bloom resolution, uses a bottom-sheet arrival panel and a scrollable chip row.
-
-## Replacing the sample with a real applicant
-
-1. Replace the contents of `shared/data.js` (`person`, `timeline`, `projects`, `skills`, `stats`, `future`, and any `copy` strings that mention the sample subject).
-2. Swap the placeholder image URLs for real, optimised photos (about 1600px wide is plenty).
-3. Pick one template, copy its folder and `shared/` to your hosting, and delete the others.
+* Semantic landmarks, skip links, visible focus, native `<dialog>` modals (focus trapped, Esc closes, arrow keys step).
+* Reduced motion removes the loader, parallax, pinned scroll, grain and canvas effects, and shows static content.
+* Animations use `transform`/`opacity`; images are lazy-loaded; canvas and WebGL loops pause when off-screen or the tab is hidden.
