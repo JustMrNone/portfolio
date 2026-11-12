@@ -82,7 +82,7 @@
     const [first, ...rest] = P.name.split(' ');
     const ring = 'I AM WAR • I AM WAR • I AM WAR • ';
     $('#top').innerHTML = `
-      <div class="hero__media"><img src="${esc(P.avatar)}" alt="${esc(P.avatarAlt)}" width="800" height="1000" fetchpriority="high" decoding="async"></div>
+      <div class="hero__media"><img class="is-dark" src="${esc(P.avatar)}" alt="${esc(P.avatarAlt)}" width="1000" height="1250" fetchpriority="high" decoding="async"><img class="is-light" src="${esc(P.avatarLight || P.avatar)}" alt="" width="1000" height="1250" decoding="async"></div>
       <div class="hero__shade" aria-hidden="true"></div>
       <div class="hero__bar hero__bar--t" aria-hidden="true"></div>
       <div class="hero__bar hero__bar--b" aria-hidden="true"></div>
@@ -117,7 +117,8 @@
   }
 
   function renderReel() {
-    const frames = TL.slice(0, 12).map((e) => `<div class="reel__f"><img src="${esc(e.image)}" alt="" width="300" height="200" loading="lazy" decoding="async"></div>`).join('');
+    const src = (D.reel && D.reel.length ? D.reel : TL.map((e) => e.image));
+    const frames = src.map((u) => `<div class="reel__f"><img src="${esc(u)}" alt="" width="450" height="300" decoding="async"></div>`).join('');
     $('#reel').innerHTML = `<div class="reel__track">${frames}${frames}</div>`;
   }
 
@@ -841,7 +842,7 @@
     const chars = $$('[data-split]', hero).flatMap(splitChars);
     const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
     tl.from('.hero__bar', { height: '46svh', duration: 1.6, ease: 'expo.inOut' }, 0)
-      .from('.hero__media img', { scale: 1.2, filter: 'grayscale(0.45) contrast(1.12) brightness(0.78) blur(14px)', duration: 2.2 }, 0)
+      .from('.hero__media img', { scale: 1.2, filter: 'contrast(1.05) saturate(1.05) blur(14px)', duration: 2.2 }, 0)
       .from(chars, { yPercent: 70, opacity: 0, rotateX: -40, duration: 1.2, stagger: 0.035 }, 0.5)
       .from('[data-hero]', { y: 30, opacity: 0, duration: 1.1, stagger: 0.14, clearProps: 'transform,opacity' }, 0.9)
       .from('.hero__hud', { opacity: 0, duration: 1 }, 1.2);

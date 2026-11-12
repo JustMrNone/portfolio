@@ -227,6 +227,7 @@ const portfolio = {
       "Alongside the film work I am a published researcher: first author of peer-reviewed articles on children and families and on a serious game for autistic children, a peer reviewer for Trends in Psychiatry and Psychotherapy and the Asian Journal of Education and Social Studies, and a Deutschlandstipendium holder at the Bauhaus-Universität Weimar. This portfolio is the long version of my application. Take your time; there is a seat for you."
     ],
     avatar: "../shared/img/portrait.svg",
+    avatarLight: "../shared/img/portrait-light.svg",
     avatarAlt: "Portrait of Elham Hesami",
     email: "elham.hesami@example.com",
     socials: [
@@ -533,6 +534,26 @@ const portfolio = {
   /* ----------------------------------------------------------------------
      I AM WAR — the key-art feature shown in every template
      ---------------------------------------------------------------------- */
+  /* Film-strip frames (used by the scrolling reel in the launcher and Director's Cut) */
+  reel: [
+    "../shared/img/still-01.svg",
+    "../shared/img/still-02.svg",
+    "../shared/img/still-03.svg",
+    "../shared/img/still-04.svg",
+    "../shared/img/still-05.svg",
+    "../shared/img/still-06.svg",
+    "../shared/img/still-07.svg",
+    "../shared/img/still-08.svg",
+    "../shared/img/still-09.svg",
+    "../shared/img/still-10.svg",
+    "../shared/img/still-11.svg",
+    "../shared/img/still-12.svg",
+    "../shared/img/still-13.svg",
+    "../shared/img/still-14.svg",
+    "../shared/img/still-15.svg",
+    "../shared/img/still-16.svg"
+  ],
+
   iamwar: {
     kicker: "The film at the heart of this portfolio",
     title: ["I AM", "WAR"],

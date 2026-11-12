@@ -47,6 +47,8 @@
 .iaw-win { animation: iawTwinkle 3.6s ease-in-out infinite; }
 .iaw-rec { animation: iawBlink 1.3s steps(2, jump-none) infinite; }
 .iaw-ray { animation: iawBeam 4.4s ease-in-out infinite; transform-origin: 392px 640px; }
+.iaw-hair { transform-origin: 520px 632px; animation: iawHair 4.2s ease-in-out infinite alternate; }
+@keyframes iawHair { from { transform: rotate(-3deg); } to { transform: rotate(4deg); } }
 @keyframes iawTwinkle { 50% { opacity: 0.55; } }
 @keyframes iawBlink { 50% { opacity: 0.1; } }
 @keyframes iawBeam { 50% { opacity: 0.55; } }
@@ -129,6 +131,6 @@
 dialog.is-war::backdrop { background: radial-gradient(ellipse at 50% 90%, rgba(120, 30, 14, 0.55), rgba(5, 3, 3, 0.9) 70%); }
 
 @media (prefers-reduced-motion: reduce) {
-  .iaw-win, .iaw-rec, .iaw-ray { animation: none; }
+  .iaw-win, .iaw-rec, .iaw-ray, .iaw-hair { animation: none; }
   .iaw-l { transition: none; }
 }

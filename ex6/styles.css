@@ -134,7 +134,7 @@ body.at-hero .site-header:not(.is-stuck) .nav-i { color: var(--accent); }
 /* ---------- 3. HERO ---------- */
 .hero { position: relative; isolation: isolate; min-height: 100vh; min-height: 100svh; display: grid; align-items: end; overflow: clip; background: #000; color: #ece4d3; --bar: clamp(2.6rem, 7svh, 4.5rem); }
 .hero__media { position: absolute; inset: 0; z-index: -2; }
-.hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 18%; filter: grayscale(0.45) contrast(1.12) brightness(0.78) sepia(0.12); transform-origin: 60% 30%; }
+.hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 18%; filter: contrast(1.05) saturate(1.05); transform-origin: 60% 30%; }
 @media (min-width: 900px) {
   .hero__media img { position: absolute; right: 0; left: auto; width: 74%; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 38%); mask-image: linear-gradient(90deg, transparent 0, #000 38%); object-position: 50% 22%; }
 }
@@ -180,8 +180,7 @@ body.at-hero .site-header:not(.is-stuck) .nav-i { color: var(--accent); }
 @keyframes drip { 0% { transform: scaleY(0); } 60% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
 
 @media (min-width: 700px) {
-  .hero__name { font-size: clamp(5rem, 13.4vw, 15rem); }
-  .hero__name > span { display: inline-block; margin-right: 0.14em; }
+  .hero__name { font-size: clamp(5rem, 13vw, 14rem); }
 }
 
 /* ---------- 4. REEL + ABOUT ---------- */
@@ -189,8 +188,8 @@ body.at-hero .site-header:not(.is-stuck) .nav-i { color: var(--accent); }
 .reel::before, .reel::after { content: ""; position: absolute; left: 0; right: 0; height: 9px; background: repeating-linear-gradient(90deg, transparent 0 9px, rgba(236, 228, 211, 0.5) 9px 21px, transparent 21px 30px); -webkit-mask: linear-gradient(#000, #000); }
 .reel::before { top: 6px; } .reel::after { bottom: 6px; }
 .reel__track { display: flex; width: max-content; animation: reel 70s linear infinite; }
-.reel__f { flex: none; width: clamp(120px, 15vw, 190px); aspect-ratio: 3 / 2; margin-inline: 5px; overflow: hidden; background: #1a1713; }
-.reel__f img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.55) contrast(1.1) brightness(0.85); }
+.reel__f { flex: none; width: clamp(150px, 18vw, 250px); aspect-ratio: 3 / 2; margin-inline: 5px; overflow: hidden; background: #1a1713; }
+.reel__f img { width: 100%; height: 100%; object-fit: cover; filter: contrast(1.04) saturate(1.05); }
 @keyframes reel { to { transform: translateX(-50%); } }
 
 .about__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(1.5rem, 5vw, 5rem); align-items: start; }
@@ -537,6 +536,48 @@ body.at-hero .site-header:not(.is-stuck) .nav-i { color: var(--accent); }
   .credits__roll { animation: none; }
   .hero__badge svg.ring { animation: none; }
 }
+
+
+/* ---------- 13b. HOUSE LIGHTS ON — the light theme re-lights the whole film ---------- */
+.hero__media .is-light { display: none; }
+:root[data-theme="light"] .hero__media .is-light { display: block; }
+:root[data-theme="light"] .hero__media .is-dark { display: none; }
+:root[data-theme="light"] .hero { background: var(--bg); color: var(--ink); }
+:root[data-theme="light"] .hero__shade { background:
+  linear-gradient(180deg, rgba(236, 229, 214, 0.7) 0, rgba(236, 229, 214, 0) 26%, rgba(236, 229, 214, 0.1) 50%, rgba(236, 229, 214, 0.94) 100%),
+  linear-gradient(90deg, rgba(236, 229, 214, 0.95) 0, rgba(236, 229, 214, 0.3) 55%, rgba(236, 229, 214, 0) 100%); }
+:root[data-theme="light"] .hero__bar { background: var(--bg-3); }
+:root[data-theme="light"] .hero__hud { color: rgba(20, 17, 13, 0.7); }
+:root[data-theme="light"] .hero__hud::before, :root[data-theme="light"] .hero__hud::after { border-color: rgba(20, 17, 13, 0.5); }
+:root[data-theme="light"] .hero__eyebrow { color: var(--accent-ink); }
+:root[data-theme="light"] .hero__eyebrow::before { background: var(--accent-ink); }
+:root[data-theme="light"] .hero__title { color: var(--ink); }
+:root[data-theme="light"] .hero__lede { color: #3a3126; }
+:root[data-theme="light"] .hero .btn { color: var(--ink); border-color: var(--line-2); }
+:root[data-theme="light"] .hero .btn--primary { color: var(--on-accent); border-color: var(--accent); }
+:root[data-theme="light"] .hero__badge { color: var(--ink); }
+:root[data-theme="light"] .hero__scroll { color: var(--ink-2); }
+:root[data-theme="light"] body.at-hero .site-header:not(.is-stuck) { color: var(--ink); }
+:root[data-theme="light"] body.at-hero .site-header:not(.is-stuck) .runtime { color: var(--ink-2); }
+:root[data-theme="light"] body.at-hero .site-header:not(.is-stuck) .nav-i { color: var(--accent-ink); }
+:root[data-theme="light"] .reel { background: #e0d7c3; border-color: #cfc5ac; }
+:root[data-theme="light"] .reel::before, :root[data-theme="light"] .reel::after { background: repeating-linear-gradient(90deg, transparent 0 9px, rgba(20, 17, 13, 0.42) 9px 21px, transparent 21px 30px); }
+:root[data-theme="light"] .slate { color: var(--ink); }
+:root[data-theme="light"] .slate__clap { border-color: var(--ink); background: repeating-linear-gradient(-58deg, var(--paper) 0 clamp(1.4rem, 3vw, 2.2rem), var(--ink) clamp(1.4rem, 3vw, 2.2rem) clamp(2.8rem, 6vw, 4.4rem)); }
+:root[data-theme="light"] .slate__body { border-color: var(--ink); background: var(--paper); box-shadow: 0 30px 60px -30px rgba(20, 17, 13, 0.35); }
+:root[data-theme="light"] .slate__stripe { border-bottom-color: var(--ink); background: repeating-linear-gradient(58deg, var(--paper) 0 clamp(1.4rem, 3vw, 2.2rem), var(--ink) clamp(1.4rem, 3vw, 2.2rem) clamp(2.8rem, 6vw, 4.4rem)); }
+:root[data-theme="light"] .slate__meta { border-color: rgba(20, 17, 13, 0.55); }
+:root[data-theme="light"] .slate__meta div { border-color: rgba(20, 17, 13, 0.3); }
+:root[data-theme="light"] .stat { border-color: rgba(20, 17, 13, 0.4); }
+:root[data-theme="light"] .stat dd { color: var(--accent-ink); }
+:root[data-theme="light"] .tease { background: var(--paper); color: var(--ink); border-color: var(--line-2); box-shadow: 0 24px 50px -30px rgba(20, 17, 13, 0.35); }
+:root[data-theme="light"] .tease p { color: var(--ink-2); }
+:root[data-theme="light"] .tease__num { -webkit-text-stroke-color: rgba(20, 17, 13, 0.22); }
+:root[data-theme="light"] .tease__tag { color: #b32a20; }
+:root[data-theme="light"] .credits { background: var(--paper); color: var(--ink); }
+:root[data-theme="light"] .credits__group small { color: var(--accent-ink); }
+:root[data-theme="light"] .credits__group .iaw { color: var(--accent-ink); }
+:root[data-theme="light"] .poster__link { box-shadow: 0 30px 50px -28px rgba(20, 17, 13, 0.5), 0 0 0 1px rgba(20, 17, 13, 0.12); }
 
 /* ---------- 14. I AM WAR FEATURE TOKENS (shared/iamwar.css) ---------- */
 .iaw-feature { --iaw-ink: var(--ink); --iaw-muted: var(--ink-2); --iaw-accent: var(--accent-ink); --iaw-line: var(--line-2); --iaw-on-accent: #14100a; --iaw-title-font: var(--font-display); background: var(--bg-2); }
