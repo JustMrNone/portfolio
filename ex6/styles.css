@@ -134,7 +134,7 @@ body.at-hero .site-header:not(.is-stuck) .nav-i { color: var(--accent); }
 /* ---------- 3. HERO ---------- */
 .hero { position: relative; isolation: isolate; min-height: 100vh; min-height: 100svh; display: grid; align-items: end; overflow: clip; background: #000; color: #ece4d3; --bar: clamp(2.6rem, 7svh, 4.5rem); }
 .hero__media { position: absolute; inset: 0; z-index: -2; }
-.hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 18%; filter: contrast(1.05) saturate(1.05); transform-origin: 60% 30%; }
+.hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 6% 16%; filter: contrast(1.05) saturate(1.05); transform-origin: 60% 30%; }
 @media (min-width: 900px) {
   .hero__media img { position: absolute; right: 0; left: auto; width: 74%; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 38%); mask-image: linear-gradient(90deg, transparent 0, #000 38%); object-position: 50% 22%; }
 }
