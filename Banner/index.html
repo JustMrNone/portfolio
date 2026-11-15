@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>I AM WAR — Banner versions</title>
+  <style>
+    :root { --ink: #0b0f10; --text: #eee9dd; --mute: #8f9896; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      background: var(--ink); color: var(--text);
+      font: 400 13px/1.2 ui-monospace, Consolas, "Courier New", monospace; letter-spacing: .16em; text-transform: uppercase;
+      display: flex; flex-direction: column; min-height: 100svh; padding: clamp(18px, 3vw, 44px); gap: clamp(18px, 2.4vw, 32px);
+    }
+    h1 { margin: 0; font: inherit; color: var(--mute); }
+    .grid { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(12px, 1.6vw, 24px); align-content: center; }
+    a { color: inherit; text-decoration: none; display: block; }
+    figure { margin: 0; aspect-ratio: 16 / 9; overflow: hidden; background: #151a1c; border-radius: 6px; }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.2, .7, .2, 1), filter .5s; filter: brightness(.85); }
+    a:hover img, a:focus-visible img { transform: scale(1.04); filter: brightness(1); }
+    a:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; border-radius: 6px; }
+    .label { display: flex; justify-content: space-between; margin-top: 14px; }
+    .label span:last-child { color: var(--mute); transition: color .3s, transform .3s; }
+    a:hover .label span:last-child { color: var(--text); transform: translateX(4px); }
+    @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <h1>I AM WAR</h1>
+  <main class="grid">
+    <a href="version-01/index.html">
+      <figure><img src="images/web/preview-01.webp" alt="Version 01 — dark slate with torn-paper collage" width="900" height="506"></figure>
+      <div class="label"><span>01 — Slate</span><span>Open →</span></div>
+    </a>
+    <a href="version-02/index.html">
+      <figure><img src="images/web/preview-02.webp" alt="Version 02 — light bone paper with pinned prints" width="900" height="506"></figure>
+      <div class="label"><span>02 — Bone</span><span>Open →</span></div>
+    </a>
+    <a href="version-03/index.html">
+      <figure><img src="images/web/preview-03.webp" alt="Version 03 — horizon photograph with framed pieces" width="900" height="506"></figure>
+      <div class="label"><span>03 — Horizon</span><span>Open →</span></div>
+    </a>
+  </main>
+</body>
+</html>

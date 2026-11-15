@@ -1,0 +1,176 @@
+/* I AM WAR — Version 01: Slate
+   The demo, modernised: near-black slate, a cold shaft of light, desaturated
+   photographs, a wide geometric display face, and a seamless photo band. */
+
+:root {
+  --ink: #0b0f10;
+  --slate: #182022;
+  --paper: #cdc4b0;
+  --text: #eee9dd;
+  --display: "Bodoni Moda", "Didot", Georgia, serif;
+  --band: max(34svh, 200px);
+  --px: 0;
+  --py: 0;
+
+  --torn: polygon(0 2%, 4% 0, 9% 1.5%, 15% 0, 22% 1.2%, 30% 0, 38% 1.8%, 47% 0, 55% 1.2%, 63% 0, 72% 1.8%, 81% 0, 90% 1.2%, 100% 0,
+                  100% 98%, 94% 100%, 86% 98.6%, 77% 100%, 68% 98.2%, 58% 100%, 49% 98.6%, 40% 100%, 31% 98.2%, 21% 100%, 12% 98.6%, 5% 100%, 0 98%);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { background: var(--ink); color: var(--text); font-family: var(--display); -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; }
+
+/* ---------- Stage ---------- */
+.banner {
+  position: relative; height: 100svh; min-height: 620px; overflow: hidden; isolation: isolate;
+  background: radial-gradient(110% 90% at 28% 25%, #28333a 0%, var(--slate) 45%, var(--ink) 100%);
+}
+/* cold shaft of light + vignette */
+.banner::before {
+  content: ""; position: absolute; inset: 0; z-index: 5; pointer-events: none; mix-blend-mode: screen;
+  background:
+    linear-gradient(104deg, transparent 32%, rgba(196, 220, 230, .11) 43%, rgba(196, 220, 230, .03) 52%, transparent 60%),
+    radial-gradient(130% 100% at 50% 40%, transparent 55%, rgba(0, 0, 0, .5) 100%);
+}
+
+/* ---------- Title ---------- */
+.title {
+  position: absolute; z-index: 4; left: clamp(20px, 4.5vw, 84px); top: 24%;
+  margin: 0; display: flex; flex-direction: column; align-items: flex-start;
+  font-family: var(--display); text-transform: uppercase;
+  text-shadow: 0 6px 50px rgba(0, 0, 0, .65);
+  transform: translate3d(calc(var(--px) * -4px), calc(var(--py) * -3px), 0);
+}
+.title span:first-child {
+  font: italic 500 clamp(1.6rem, 4.2vw, 4.6rem)/1 var(--display);
+  letter-spacing: .06em; color: #aab4b2; margin-left: .15em;
+}
+.title span:last-child {
+  font: 800 clamp(4.6rem, 13vw, 14rem)/.82 var(--display);
+  letter-spacing: .012em; color: var(--text);
+}
+
+/* ---------- Collage ---------- */
+.collage {
+  position: absolute; z-index: 3; right: clamp(16px, 3.5vw, 70px); top: clamp(30px, 5vh, 60px);
+  width: min(45vw, 820px); bottom: calc(var(--band) - 6px);
+  filter: drop-shadow(0 22px 38px rgba(0, 0, 0, .7));
+}
+.collage > * { position: absolute; }
+
+.sheet { clip-path: var(--torn); background-color: var(--paper); }
+.sheet--back {
+  inset: 3% 0 4% 2%;
+  background-image: linear-gradient(rgba(11,15,16,.45), rgba(11,15,16,.45)), url(../images/web/paper.webp);
+  background-size: cover; background-position: 0 40%;
+  transform: translate3d(calc(var(--px) * 3px), calc(var(--py) * 2px), 0) rotate(-1.6deg);
+}
+.sheet--note {
+  inset: 0 2% 6% 22%;
+  background-image: url(../images/web/paper.webp); background-size: 135% auto; background-position: 0 30%;
+  filter: sepia(.3) contrast(1.05) brightness(.9);
+  transform: translate3d(calc(var(--px) * 5px), calc(var(--py) * 3px), 0) rotate(1.2deg);
+}
+
+.print { margin: 0; overflow: hidden; clip-path: var(--torn); }
+.print img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(.4) contrast(1.15) brightness(.92); }
+
+.print--friends {
+  top: 6%; left: 34%; width: 60%; aspect-ratio: 604 / 402;
+  transform: translate3d(calc(var(--px) * 7px), calc(var(--py) * 5px), 0) rotate(.7deg);
+}
+.print--hand {
+  left: 3%; bottom: 7%; width: 84%; height: 56%;
+  transform: translate3d(calc(var(--px) * 10px), calc(var(--py) * 7px), 0) rotate(-.6deg);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 38%);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 38%);
+}
+
+.figure {
+  position: absolute; z-index: 4; left: 50%; bottom: calc(var(--band) - 6px);
+  height: min(31svh, 340px); aspect-ratio: 1191 / 1200;
+  background: url(../images/web/figure-silhouette.webp) center bottom / contain no-repeat;
+  transform: translateX(-50%);
+}
+/* cold mist behind the figure, as in the original photograph */
+.figure::before {
+  content: ""; position: absolute; z-index: -1; left: 50%; bottom: -8%; width: 260%; height: 120%;
+  transform: translateX(-50%); pointer-events: none;
+  background: radial-gradient(ellipse 50% 50% at 50% 62%, rgba(176, 202, 212, .8), rgba(176, 202, 212, .32) 45%, transparent 72%);
+  mix-blend-mode: screen;
+}
+
+/* ---------- Photo band ---------- */
+.band {
+  position: absolute; z-index: 2; inset: auto 0 0 0; height: var(--band);
+  margin: 0; padding: 0; list-style: none; display: flex; background: var(--ink);
+}
+/* torn edge where the collage meets the band */
+.band::before {
+  content: ""; position: absolute; z-index: 4; left: 0; right: 0; top: -16px; height: 26px; background: var(--ink);
+  clip-path: polygon(0 60%, 3% 30%, 7% 55%, 12% 20%, 18% 50%, 25% 25%, 31% 55%, 38% 15%, 45% 45%, 52% 20%, 60% 55%, 67% 25%, 75% 50%, 83% 18%, 90% 48%, 96% 25%, 100% 45%, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+/* shared grade that unifies the whole band */
+.band::after {
+  content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(11,15,16,.55), rgba(11,15,16,0) 38%, rgba(11,15,16,0) 70%, rgba(11,15,16,.55)),
+    linear-gradient(90deg, rgba(40,70,85,.18), rgba(120,60,40,.14));
+  mix-blend-mode: multiply;
+}
+.band li {
+  position: relative; flex: 1 1 0; min-width: 0; margin-left: -5%; overflow: hidden;
+  filter: grayscale(.5) contrast(1.12) brightness(.85);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 26%, #000 74%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 26%, #000 74%, transparent 100%);
+  transition: flex-grow .8s cubic-bezier(.2, .7, .2, 1), filter .6s;
+}
+.band li:first-child { margin-left: 0; -webkit-mask-image: linear-gradient(90deg, #000 74%, transparent); mask-image: linear-gradient(90deg, #000 74%, transparent); }
+.band li:last-child  { -webkit-mask-image: linear-gradient(90deg, transparent, #000 26%); mask-image: linear-gradient(90deg, transparent, #000 26%); }
+.band li:hover { flex-grow: 1.6; filter: grayscale(0) contrast(1.05) brightness(1.05); }
+
+/* ---------- Crossfading photographs ---------- */
+[data-fade] > img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; z-index: 1;
+  transition: opacity 2.4s ease-in-out 2.4s;      /* leaves only after the next photo has fully arrived */
+}
+[data-fade] > img.on { opacity: 1; z-index: 2; transition-delay: 0s; }
+.band [data-fade] > img { transform: scale(1.07); transition: opacity 2.4s ease-in-out 2.4s, transform 12s ease-out; }
+.band [data-fade] > img.on { transform: scale(1); transition-delay: 0s, 0s; }
+
+/* ---------- Grain (static) ---------- */
+.grain { position: absolute; z-index: 6; inset: 0; pointer-events: none; opacity: .1; mix-blend-mode: overlay; background-image: var(--grain, none); }
+
+/* ---------- Entrance (once) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .title, .collage > *, .band li { animation: settle 1.2s cubic-bezier(.2, .7, .2, 1) both; }
+  .title { animation-delay: .15s; }
+  .sheet--back { animation-delay: .25s; } .sheet--note { animation-delay: .4s; }
+  .print--friends { animation-delay: .6s; } .print--hand { animation-delay: .8s; }
+  .figure { animation: fade-in 1.4s 1.2s both; }
+  .band li:nth-child(1) { animation-delay: .5s; } .band li:nth-child(2) { animation-delay: .6s; }
+  .band li:nth-child(3) { animation-delay: .7s; } .band li:nth-child(4) { animation-delay: .8s; }
+  .band li:nth-child(5) { animation-delay: .9s; } .band li:nth-child(6) { animation-delay: 1s; }
+}
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes settle { from { opacity: 0; translate: 0 14px; } to { opacity: 1; translate: 0 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .band li, [data-fade] > img, .band [data-fade] > img { transition: none; transform: none; }
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 900px) {
+  .title { top: 7%; }
+  .figure { height: 20svh; }
+  .collage { width: calc(100% - 32px); right: 16px; top: 24%; bottom: auto; height: 38svh; min-height: 210px; }
+}
+/* ---------- Mobile ---------- */
+@media (max-width: 560px) {
+  .banner { min-height: 660px; }
+  .collage { top: 20%; bottom: auto; height: 40svh; }
+  .print--friends { left: 28%; width: 68%; }
+  .banner { --band: max(28svh, 170px); }
+  .band li:nth-child(n+5) { display: none; }
+}

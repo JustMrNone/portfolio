@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>I AM WAR — 01 Slate</title>
+  <meta name="description" content="I AM WAR — a documentary about the human consequences of political decisions.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,700;0,800;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="banner" id="banner">
+
+    <h1 class="title"><span>I AM</span><span>WAR</span></h1>
+
+    <!-- Torn-paper collage -->
+    <div class="collage">
+      <div class="sheet sheet--back"></div>
+      <div class="sheet sheet--note"></div>
+
+      <figure class="print print--friends">
+        <img src="../images/web/friends.webp" width="604" height="402" alt="A group of friends in a living room, each holding a sheet of paper." fetchpriority="high">
+      </figure>
+
+      <!-- the hand slowly dissolves into other photographs -->
+      <figure class="print print--hand" data-fade="9">
+        <img class="on" src="../images/web/ring.webp" width="2400" height="3200" alt="A hand with iridescent nails wearing a gold ring in the shape of a map." style="object-position:50% 46%">
+        <img src="../images/web/s-guernica-woman.webp" width="881" height="900" alt="A woman standing in front of Picasso's Guernica." loading="lazy" style="object-position:50% 22%">
+        <img src="../images/web/child.webp" width="1800" height="2035" alt="A faded snapshot of a child crying on a balcony." loading="lazy" style="object-position:50% 48%">
+      </figure>
+    </div>
+
+    <!-- the figure stands on the edge of the photo band, centred as in the original -->
+    <div class="figure" role="img" aria-label="A silhouette standing with arms outstretched."></div>
+
+    <!-- Photo band: every panel dissolves between its own photographs.
+         Swap an image by changing its src. Panels 5 and 6 reuse photos
+         as temporary stand-ins until more material arrives. -->
+    <ul class="band">
+      <li data-fade="7">
+        <img class="on" src="../images/web/dancer-a.webp" alt="" style="object-position:50% 30%">
+        <img src="../images/web/s-guernica-woman.webp" alt="" loading="lazy" style="object-position:50% 20%">
+      </li>
+      <li data-fade="8">
+        <img class="on" src="../images/web/s-figure-tight.webp" alt="">
+        <img src="../images/web/s-ring-close.webp" alt="" loading="lazy">
+      </li>
+      <li data-fade="9">
+        <img class="on" src="../images/web/leap.webp" alt="" style="object-position:62% 50%">
+        <img src="../images/web/s-guernica-art.webp" alt="" loading="lazy">
+      </li>
+      <li data-fade="7.5">
+        <img class="on" src="../images/web/s-child-face.webp" alt="" style="object-position:50% 40%">
+        <img src="../images/web/dancer-b.webp" alt="" loading="lazy" style="object-position:50% 30%">
+      </li>
+      <li data-fade="8.5"><!-- stand-in -->
+        <img class="on" src="../images/web/s-plate-face.webp" alt="" style="object-position:50% 35%">
+        <img src="../images/web/friends.webp" alt="" loading="lazy">
+      </li>
+      <li data-fade="9.5"><!-- stand-in -->
+        <img class="on" src="../images/web/s-figure-wide.webp" alt="">
+        <img src="../images/web/child.webp" alt="" loading="lazy" style="object-position:50% 42%">
+      </li>
+    </ul>
+
+    <div class="grain" aria-hidden="true"></div>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

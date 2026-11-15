@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta name="robots" content="noindex, nofollow, noarchive">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Portfolio cuts — Elham Hesami · I Am War</title>
-  <meta name="description" content="Six cinematic portfolio templates for Elham Hesami — director, actress, visual artist and researcher — built around the film I Am War.">
+  <meta name="description" content="Six cinematic portfolio templates plus banner versions for Elham Hesami — director, actress, visual artist and researcher — built around the film I Am War.">
   <meta name="theme-color" content="#0a0908">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -109,6 +110,7 @@
     .pv--6 { background: #0a0908; color: #ece4d3; } .pv--6::before, .pv--6::after { content: ""; position: absolute; left: 0; right: 0; height: 17%; background: #000; z-index: 2; } .pv--6::before { top: 0; } .pv--6::after { bottom: 0; }
     .pv--6 .n { position: absolute; left: 7%; bottom: 26%; font: 900 clamp(1.6rem, 4.4vw, 2.8rem)/0.85 "Impact", "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: 0.01em; }
     .pv--6 .glow { position: absolute; right: -10%; top: 10%; width: 60%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(255, 179, 71, 0.6), transparent 65%); }
+    .pv--7 { background: #0a0908; display: grid; place-items: center; } .pv--7 .bn { width: 80%; height: 34%; border: 2px solid #ffb347; display: grid; place-items: center; font: 900 clamp(1.4rem, 3.6vw, 2.2rem)/1 "Impact", "Arial Narrow", sans-serif; letter-spacing: 0.08em; color: #ece4d3; background: linear-gradient(90deg, rgba(255,179,71,.25), transparent 70%); }
     .pv--6 .tr { position: absolute; left: 7%; right: 7%; bottom: 20%; height: 6px; background: linear-gradient(90deg, #ffb347 38%, rgba(236, 228, 211, 0.25) 38%); z-index: 3; } .pv--6 .ph { position: absolute; left: 38%; bottom: 17%; width: 2px; height: 12px; background: #e5352b; z-index: 3; }
 
     .foot { padding: clamp(2rem, 5vw, 4rem) var(--gutter) 1.2rem; border-top: 1px solid var(--line-2); text-align: left; }
@@ -192,7 +194,11 @@
       { n: '06', folder: 'ex6', name: "Director's Cut", tag: 'Cinematic · edit suite · screenplay', c: '#ffb347', isNew: true,
         desc: 'A letterboxed hero with a live viewfinder, a screenplay-page About that types itself, a pinned edit-suite timeline with a scrubbing playhead, movie-poster projects, a mixing-desk skills section and end credits.',
         chips: ['Edit-suite timeline', 'Dark / house lights', 'Film grain', 'Signal-lost war cut'], sw: ['#0a0908', '#ffb347', '#e5352b', '#ece4d3'], fonts: 'Big Shoulders Display · Newsreader · Courier Prime',
-        pv: '<div class="pv pv--6"><span class="glow"></span><span class="n">Elham<br>Hesami</span><span class="tr"></span><span class="ph"></span></div>' }
+        pv: '<div class="pv pv--6"><span class="glow"></span><span class="n">Elham<br>Hesami</span><span class="tr"></span><span class="ph"></span></div>' },
+      { n: '07', folder: 'Banner', name: 'Banner', tag: 'Banner versions', c: '#ffb347', isNew: true,
+        desc: 'The I Am War banner designs, gathered in one place. Open the index to browse every banner version.',
+        chips: ['Banner versions', 'Version 01', 'Version 02', 'Version 03'], sw: ['#0a0908', '#ffb347', '#ece4d3'], fonts: 'I Am War · Banner',
+        pv: '<div class="pv pv--7"><div class="bn">I AM WAR</div></div>' }
     ];
 
     document.title = `Portfolio cuts — ${P.name} · I Am War`;

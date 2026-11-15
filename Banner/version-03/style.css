@@ -1,0 +1,136 @@
+/* I AM WAR — Version 03: Horizon
+   The demo layout over a single photographic field. A back and a front layer
+   of the same photograph give gentle depth; the collage pieces sit above it. */
+
+:root {
+  --night: #080b0e;
+  --text: #eef0ee;
+  --sans: "Jost", "Helvetica Neue", Arial, sans-serif;
+  --px: 0;
+  --py: 0;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { background: var(--night); color: var(--text); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; }
+
+.banner { position: relative; height: 100svh; min-height: 620px; overflow: hidden; isolation: isolate; }
+
+/* ---------- Field ---------- */
+.field {
+  position: absolute; inset: 0; z-index: 0;
+  /* colours sampled from the photograph's own edges, so the zoomed-out frame melts into them */
+  background: linear-gradient(to bottom, #424a4e 0, #424a4e 5%, #505556 27%, #262a2d 50%, #020302 73%, #010201 100%);
+}
+.field img {
+  position: absolute; left: 50%; top: 53%; translate: -50% -50%;
+  width: max(80vw, 100svh); height: auto; aspect-ratio: 3 / 2; max-width: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent), linear-gradient(180deg, transparent, #000 10%, #000 90%, transparent);
+  -webkit-mask-composite: source-in;
+          mask-image: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent), linear-gradient(180deg, transparent, #000 10%, #000 90%, transparent);
+          mask-composite: intersect;
+}
+.field__back {
+  filter: saturate(.45) brightness(.62) contrast(1.05);
+  transform: translate3d(calc(var(--px) * 6px), calc(var(--py) * 4px), 0);
+}
+.field__front {
+  filter: brightness(.7);
+  transform: translate3d(calc(var(--px) * -14px), calc(var(--py) * -8px), 0);
+}
+.mist {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, rgba(8, 11, 14, .82) 0, rgba(8, 11, 14, .35) 38%, rgba(8, 11, 14, 0) 62%),
+    linear-gradient(180deg, rgba(8, 11, 14, .55) 0, rgba(8, 11, 14, 0) 30%);
+}
+
+/* ---------- Title ---------- */
+.title {
+  position: absolute; z-index: 4;
+  left: clamp(20px, 5.5vw, 96px); top: 33%;
+  margin: 0;
+  font: 300 clamp(2.2rem, 5vw, 5.2rem)/1 var(--sans);
+  letter-spacing: .34em;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, .5);
+  transform: translate3d(calc(var(--px) * -5px), calc(var(--py) * -3px), 0);
+}
+
+/* ---------- Pieces ---------- */
+.piece {
+  position: absolute; z-index: 3; margin: 0; overflow: hidden; border-radius: 12px;
+  outline: 1px solid rgba(238, 240, 238, .22); outline-offset: 6px;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, .55);
+  transition: outline-color .4s, box-shadow .4s;
+}
+.piece:hover { outline-color: rgba(238, 240, 238, .7); }
+.piece img { width: 100%; height: 100%; object-fit: cover; }
+
+.piece--friends {
+  right: clamp(24px, 6vw, 110px); top: clamp(56px, 9vh, 100px);
+  width: min(30vw, 520px); aspect-ratio: 604 / 402;
+  transform: translate3d(calc(var(--px) * 18px), calc(var(--py) * 10px), 0);
+}
+.piece--friends img { filter: saturate(.9) contrast(1.05); }
+
+.piece--hand {
+  right: clamp(150px, 20vw, 380px); top: clamp(140px, 28vh, 270px);
+  width: min(22vw, 380px); aspect-ratio: 4 / 3.4; z-index: 4;
+  transform: translate3d(calc(var(--px) * 26px), calc(var(--py) * 16px), 0);
+}
+.piece--hand img { object-position: 50% 46%; }
+
+.piece--plate {
+  right: clamp(24px, 6vw, 110px); top: clamp(250px, 42vh, 410px);
+  width: min(15vw, 260px); aspect-ratio: 1; border-radius: 50%;
+  outline-offset: 7px;
+  transform: translate3d(calc(var(--px) * 34px), calc(var(--py) * 20px), 0);
+}
+
+/* ---------- Strip ---------- */
+.strip {
+  position: absolute; z-index: 2; inset: auto 0 0; height: 21svh; min-height: 130px;
+  margin: 0; padding: 0; list-style: none; display: flex;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 40%);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 40%);
+}
+.strip li {
+  position: relative; flex: 1 1 0; min-width: 0; margin-left: -2.5%;
+  background: var(--bg) var(--pos, 50% 50%) / cover no-repeat;
+  filter: saturate(.55) brightness(.7);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 25%, #000 75%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 25%, #000 75%, transparent 100%);
+  transition: filter .5s;
+}
+.strip li:first-child { margin-left: 0; }
+.strip li:hover { filter: saturate(1) brightness(1); }
+
+/* ---------- Entrance (once) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .title, .piece, .strip li { animation: fade 1.2s cubic-bezier(.2, .7, .2, 1) both; }
+  .field { animation: fade 1.6s ease both; }
+  .title { animation-delay: .3s; }
+  .piece--friends { animation-delay: .6s; }
+  .piece--hand { animation-delay: .8s; }
+  .piece--plate { animation-delay: 1s; }
+  .strip li:nth-child(1) { animation-delay: .5s; } .strip li:nth-child(2) { animation-delay: .6s; }
+  .strip li:nth-child(3) { animation-delay: .7s; } .strip li:nth-child(4) { animation-delay: .8s; }
+  .strip li:nth-child(5) { animation-delay: .9s; } .strip li:nth-child(6) { animation-delay: 1s; }
+}
+@keyframes fade { from { opacity: 0; translate: 0 12px; } to { opacity: 1; translate: 0 0; } }
+@media (prefers-reduced-motion: reduce) { .strip li, .piece { transition: none; } }
+
+/* ---------- Tablet ---------- */
+@media (max-width: 900px) {
+  .title { top: 14%; }
+  .mist { background: linear-gradient(180deg, rgba(8, 11, 14, .7), rgba(8, 11, 14, .1) 55%); }
+  .piece--friends { width: 52vw; top: 30%; right: 20px; }
+  .piece--hand { width: 38vw; right: auto; left: 20px; top: 38%; }
+  .piece--plate { width: 24vw; right: 24px; top: 52%; }
+}
+@media (max-width: 560px) {
+  .title { letter-spacing: .24em; }
+  .strip li:nth-child(n+5) { display: none; }
+  .strip li { margin-left: -5%; }
+}

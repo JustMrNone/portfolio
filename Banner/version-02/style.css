@@ -1,0 +1,156 @@
+/* I AM WAR — Version 02: Bone
+   The demo's collage reprinted on light paper — pinned photographs above,
+   a dark band of dissolving photographs below, and the figure between them. */
+
+:root {
+  --bone: #e4dfd3;
+  --bone-2: #d9d3c4;
+  --ink: #101010;
+  --red: #c4301d;
+  --display: "Anton", Impact, "Arial Narrow", sans-serif;
+  --band: max(32svh, 190px);
+  --px: 0;
+  --py: 0;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { background: var(--ink); color: var(--ink); -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; }
+
+.banner {
+  position: relative; height: 100svh; min-height: 640px; overflow: hidden;
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .1  0 0 0 0 .08  0 0 0 0 .05  0 0 0 .09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+    radial-gradient(100% 80% at 70% 30%, #ebe7dc, var(--bone) 60%, var(--bone-2));
+}
+
+/* ---------- Title ---------- */
+.intro, .title { position: absolute; z-index: 4; left: clamp(20px, 4.5vw, 80px); top: 12%; }
+.title { margin: 0; font: 400 1em/1 var(--display); text-transform: uppercase; }
+.title span { display: block; }
+.title__small { font-size: clamp(2.2rem, 6vw, 6rem); color: var(--red); line-height: .9; letter-spacing: .02em; margin-bottom: .14em; }
+.title__big   { font-size: clamp(5.5rem, 17vw, 17rem); line-height: .86; letter-spacing: -.01em; margin-left: -.03em; }
+
+/* ---------- Board ---------- */
+.board {
+  position: absolute; z-index: 3;
+  right: clamp(14px, 4vw, 72px); top: clamp(40px, 6vh, 70px);
+  width: min(42vw, 760px); height: 50svh;
+}
+.board > * { position: absolute; }
+
+.paper {
+  inset: 2% 0 8% 18%;
+  background: url(../images/web/paper.webp) 70% 40% / cover;
+  filter: sepia(.2) contrast(1.05);
+  box-shadow: 0 10px 28px rgba(40, 30, 10, .25);
+  transform: translate3d(calc(var(--px) * 3px), calc(var(--py) * 2px), 0) rotate(1.5deg);
+}
+
+.photo {
+  margin: 0; padding: clamp(4px, .5vw, 8px); background: #f4f1ea; overflow: hidden;
+  box-shadow: 0 14px 30px rgba(30, 20, 5, .28), 0 2px 4px rgba(30, 20, 5, .2);
+  transition: transform .5s cubic-bezier(.2, .7, .2, 1), box-shadow .5s;
+}
+.photo > img { object-fit: cover; }
+.photo:not([data-fade]) > img { width: 100%; height: 100%; }
+.photo:hover { z-index: 6; box-shadow: 0 22px 40px rgba(30, 20, 5, .35), 0 2px 4px rgba(30, 20, 5, .2); }
+
+/* fading images live inside the padded frame */
+.photo[data-fade] > img { inset: clamp(4px, .5vw, 8px); width: calc(100% - 2 * clamp(4px, .5vw, 8px)); height: calc(100% - 2 * clamp(4px, .5vw, 8px)); }
+
+.photo--hand {
+  left: 0; bottom: 4%; width: 66%; height: 66%;
+  transform: translate3d(calc(var(--px) * 8px), calc(var(--py) * 6px), 0) rotate(-1.6deg);
+}
+.photo--hand:hover { transform: translate3d(calc(var(--px) * 8px), calc(var(--py) * 6px - 6px), 0) rotate(-.6deg); }
+
+.photo--friends {
+  top: 0; right: 3%; width: 50%; aspect-ratio: 604 / 402; overflow: visible;
+  transform: translate3d(calc(var(--px) * 6px), calc(var(--py) * 4px), 0) rotate(2.2deg);
+}
+.photo--friends:hover { transform: translate3d(calc(var(--px) * 6px), calc(var(--py) * 4px - 6px), 0) rotate(1deg); }
+.photo--friends img { filter: contrast(1.05) saturate(.9); }
+.tape {
+  position: absolute; z-index: 2; top: -10px; left: 50%; width: 22%; height: 22px;
+  background: rgba(214, 196, 150, .75); transform: translateX(-50%) rotate(-3deg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
+}
+
+.photo--plate {
+  right: 0; bottom: 0; width: clamp(100px, 13vw, 210px); aspect-ratio: 1; padding: 0;
+  border-radius: 50%; background: #111;
+  transform: translate3d(calc(var(--px) * 12px), calc(var(--py) * 8px), 0);
+}
+.photo--plate[data-fade] > img { inset: 0; width: 100%; height: 100%; border-radius: 50%; }
+.photo--plate:hover { transform: translate3d(calc(var(--px) * 12px), calc(var(--py) * 8px - 6px), 0) scale(1.03); }
+
+/* ---------- The figure ---------- */
+.figure {
+  position: absolute; z-index: 5; left: 50%; bottom: calc(var(--band) - 4px);
+  height: min(27svh, 310px); aspect-ratio: 1191 / 1200;
+  background: url(../images/web/figure-silhouette.webp) center bottom / contain no-repeat;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 6px 10px rgba(30, 20, 5, .25));
+}
+
+/* ---------- Dark photo band ---------- */
+.band {
+  position: absolute; z-index: 2; inset: auto 0 0; margin: 0; padding: 0; list-style: none;
+  height: var(--band); display: flex; gap: 3px; background: var(--ink);
+}
+.band::after {                         /* one grade over the whole band */
+  content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(16,16,16,.5), rgba(16,16,16,0) 35%, rgba(16,16,16,0) 75%, rgba(16,16,16,.45));
+}
+.band li {
+  position: relative; flex: 1 1 0; min-width: 0; overflow: hidden;
+  filter: grayscale(1) contrast(1.15) brightness(.88);
+  transition: flex-grow .8s cubic-bezier(.2, .7, .2, 1), filter .6s;
+}
+.band li:hover { flex-grow: 1.5; filter: grayscale(0) contrast(1.05) brightness(1.02); }
+
+/* ---------- Crossfading photographs ---------- */
+[data-fade] > img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; z-index: 1;
+  transition: opacity 2.4s ease-in-out 2.4s;      /* leaves only after the next photo has fully arrived */
+}
+[data-fade] > img.on { opacity: 1; z-index: 2; transition-delay: 0s; }
+.band [data-fade] > img { transform: scale(1.07); transition: opacity 2.4s ease-in-out 2.4s, transform 12s ease-out; }
+.band [data-fade] > img.on { transform: scale(1); transition-delay: 0s, 0s; }
+
+/* ---------- Entrance (once) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .title, .paper, .photo, .band li { animation: rise 1s cubic-bezier(.2, .7, .2, 1) both; }
+  .title { animation-delay: .1s; }
+  .paper { animation-delay: .25s; }
+  .photo--hand { animation-delay: .4s; } .photo--friends { animation-delay: .6s; } .photo--plate { animation-delay: .8s; }
+  .figure { animation: fade-in 1.4s 1.1s both; }
+  .band li:nth-child(1) { animation-delay: .5s; } .band li:nth-child(2) { animation-delay: .6s; }
+  .band li:nth-child(3) { animation-delay: .7s; } .band li:nth-child(4) { animation-delay: .8s; }
+  .band li:nth-child(5) { animation-delay: .9s; } .band li:nth-child(6) { animation-delay: 1s; }
+}
+@keyframes rise { from { opacity: 0; translate: 0 16px; } to { opacity: 1; translate: 0 0; } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .photo, .band li, [data-fade] > img, .band [data-fade] > img { transition: none; transform: none; }
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 900px) {
+  .title { top: 6%; }
+  .board { width: calc(100% - 28px); top: 30%; height: 34svh; min-height: 210px; right: 14px; }
+  .paper { inset: 2% 0 8% 8%; }
+  .photo--hand { width: 70%; }
+  .photo--friends { width: 56%; right: 2%; }
+  .figure { height: 20svh; }
+}
+/* ---------- Mobile ---------- */
+@media (max-width: 560px) {
+  .banner { --band: max(26svh, 170px); }
+  .title__big { font-size: clamp(5rem, 30vw, 9rem); }
+  .board { top: 28%; height: 36svh; }
+  .photo--plate { width: 30%; }
+  .band li:nth-child(n+4) { display: none; }
+}
